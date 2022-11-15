@@ -59,3 +59,5 @@ Finish time:
 Actual time needed to complete:
 
 <!------------------------------------------------------------------>
+
+[wrrc](images/wrrc.jpg)
