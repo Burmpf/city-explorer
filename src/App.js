@@ -1,6 +1,7 @@
 import React from "react";
 import './App.css';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert'
 
 class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,12 @@ class App extends React.Component {
     this.setState({
       search: event.target.value
     });
+  }
+
+  handleWeather = async (e) => {
+    e.preventDefault();
+    let url = `${this.process.env.REACT_APP_SERVER}`
+    let weather = await axios.get();
   }
 
 
@@ -55,23 +62,36 @@ class App extends React.Component {
 
     let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`;
 
-    return (
+    let differentCity = (
+      <>
+        <img
+    className = "modalMap"
+    src = { mapURL }
+    alt = { this.state.cityData.name + 'map' }
+      />
+        <li>{this.state.cityData.display_name}</li>
+        <li>Latitude: {this.state.cityData.lat}</li>
+        <li>Longitude: {this.state.cityData.lon}</li>
+      </>
+    );
+
+  return(
       <>
         <h1> City Exploration</h1>
         <form onSubmit={this.handleCitySubmit}>
           <label>Pick a City
             <input onChange={this.handleCityInput} name="city" type="text" placeholder="City, State"></input>
           </label>
-          <button type="submit" >Explore!</button>
+          <button type="submit">Explore!</button>
+          <ul>
+          {this.state.cityData.display_name && differentCity}
+          </ul>
+          {this.state.isError ? 
+          <Alert className="alert" variant="danger">
+            <Alert.Heading>Error!</Alert.Heading>
+            <p>{this.state.errorMsg}</p>
+            </Alert> : <p className="alert"></p>}
         </form>
-        <p>{this.state.cityData.display_name}</p>
-        <p>Latitude: {this.state.cityData.lat}</p>
-        <p>Longitude: {this.state.cityData.lon}</p>
-        <img
-          className="modalMap"
-          src={mapURL}
-          alt=''
-        />
       </>
     );
   }
