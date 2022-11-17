@@ -11,7 +11,7 @@ class App extends React.Component {
       search: '',
       cityData: {},
       isError: '',
-
+      weather: [],
 
     }
   }
@@ -44,7 +44,7 @@ class App extends React.Component {
         // lat: locationInfo.data[0].lat,
         // lon: locationInfo.data[0].lon,
         // isError: false
-      });
+      },this.getWeather);
     } catch (error) {
       console.log('error: ', error);
       console.log('error.message: ', error.message);
@@ -56,7 +56,17 @@ class App extends React.Component {
     }
   }
 
-
+  getWeather = async () =>{
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.search}`
+      let weatherResponse = await axios.get(url)
+      this.setState({
+        weather: weatherResponse.data
+      })
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 
   render() {
 
@@ -86,6 +96,15 @@ class App extends React.Component {
           <ul>
           {this.state.cityData.display_name && differentCity}
           </ul>
+          
+          {this.state.weather.map((day) => (
+          <>
+            <p>date: {day.date}</p>
+            <p>Description: {day.description}</p>
+            </>
+          ))}
+            
+
           {this.state.isError ? 
           <Alert className="alert" variant="danger">
             <Alert.Heading>Error!</Alert.Heading>
