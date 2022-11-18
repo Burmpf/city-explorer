@@ -1,5 +1,7 @@
 import React from "react";
 import './App.css';
+import Movies from './components/Movie.js.js';
+import Weather from './components/Weather.js.js';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert'
 
@@ -44,7 +46,7 @@ class App extends React.Component {
         // lat: locationInfo.data[0].lat,
         // lon: locationInfo.data[0].lon,
         // isError: false
-      },this.getWeather);
+      }, this.getWeather);
     } catch (error) {
       console.log('error: ', error);
       console.log('error.message: ', error.message);
@@ -56,7 +58,7 @@ class App extends React.Component {
     }
   }
 
-  getWeather = async () =>{
+  getWeather = async () => {
     try {
       let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.search}`
       let weatherResponse = await axios.get(url)
@@ -68,6 +70,16 @@ class App extends React.Component {
     }
   }
 
+
+  handleGetMovies = async (e) => {
+    e.preventDefault();
+    let movieData = await axios.get(`${process.env.REACT_APP_SERVER}/movies?queriedCity=${this.state.city}`);
+    this.setState({
+      movies: movieData.data,
+      isMoviesShown: true,
+    })
+  }
+
   render() {
 
     let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`;
@@ -75,17 +87,17 @@ class App extends React.Component {
     let differentCity = (
       <>
         <img
-    className = "modalMap"
-    src = { mapURL }
-    alt = { this.state.cityData.name + 'map' }
-      />
+          className="modalMap"
+          src={mapURL}
+          alt={this.state.cityData.name + 'map'}
+        />
         <li>{this.state.cityData.display_name}</li>
         <li>Latitude: {this.state.cityData.lat}</li>
         <li>Longitude: {this.state.cityData.lon}</li>
       </>
     );
 
-  return(
+    return (
       <>
         <h1> City Exploration</h1>
         <form onSubmit={this.handleCitySubmit}>
@@ -94,21 +106,26 @@ class App extends React.Component {
           </label>
           <button type="submit">Explore!</button>
           <ul>
-          {this.state.cityData.display_name && differentCity}
+            {this.state.cityData.display_name && differentCity}
           </ul>
-          
+
           {this.state.weather.map((day) => (
-          <>
-            <p>date: {day.date}</p>
-            <p>Description: {day.description}</p>
+            <>
+              <p>date: {day.date}</p>
+              <p>Description: {day.description}</p>
             </>
           ))}
-            
-
-          {this.state.isError ? 
-          <Alert className="alert" variant="danger">
-            <Alert.Heading>Error!</Alert.Heading>
-            <p>{this.state.errorMsg}</p>
+          <Weather
+            forecast={this.state.forecast}
+            cityData={this.state.cityData}
+            isDailyForecastShown={this.state.isDailyForecastShown}
+            handleCloseDailyForecast={this.handleCloseDailyForecast}
+          />
+          {this.state.isMoviesShown ? <Movies movies={this.state.movies} cityName={this.state.city} isMoviesShown={this.state.isMoviesShown} handleCloseMovies={this.handleCloseMovies} /> : <></>}
+          {this.state.isError ?
+            <Alert className="alert" variant="danger">
+              <Alert.Heading>Error: Something went wrong!</Alert.Heading>
+              <p>{this.state.errorMsg}</p>
             </Alert> : <p className="alert"></p>}
         </form>
       </>
