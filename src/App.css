@@ -1,11 +1,18 @@
 body {
   background-image: linear-gradient(#28CFD7,#D73028);
-  height: 100vh;
+  min-height: 100vh;
   width: 100vh;
   text-align: center;
   margin: auto;
+  background-repeat: no-repeat;
 }
-/*html {
+body img{
+  max-width: 50vh;
+  max-height: 50vh;
+}
+
+
+/* html {
  
   --s:67px; /* shape size 
   --m:4px;  /* line thickness 
