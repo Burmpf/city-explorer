@@ -13,7 +13,8 @@ class Weather extends React.Component {
               <WeatherDay
                 date={day.date}
                 fullDescription={day.fullDescription}
-                />
+                idx={idx}
+                key={idx}/>
                 ))
               }
             </div>
