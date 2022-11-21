@@ -1,7 +1,7 @@
 # City Explorer
 
 Keyan Tabor
-Version 0.0
+Version 3.0
 
 ## Overview
 This is a city exploration app using React and API calls 
@@ -12,7 +12,7 @@ Its a simple plug in and recieve a response
 
 ## Architecture
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
-This app uses React, locationIQ api and Netlify
+This app uses React, locationIQ api, Render, The Movie Database api, Weatherbit api, and Netlify
 
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
@@ -21,6 +21,16 @@ This app uses React, locationIQ api and Netlify
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+(./images/wrrc.jpg)
+
+Made in collaboration with: 
+
+- Ian Shirley
+- Harper Foley
+- Gordon Reilley
+- Jason Christopher
+
+### The amazing TA's at Code Fellows
 
 
 ## Time Estimates
@@ -59,7 +69,3 @@ Finish time:
 Actual time needed to complete:
 
 <!------------------------------------------------------------------>
-
-[wrrc](images/wrrc.jpg)
-
-HUGE THANK YOU TO JASON CHRISTOPHER FOR THE HELP
